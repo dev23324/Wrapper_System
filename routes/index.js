@@ -1,48 +1,45 @@
 var express = require('express');
 var router = express.Router();
+
 var bitcoin_rpc = require('node-bitcoin-rpc')
-
 /* GET home page. */
-router.get('/', function(req, res, next) {
+router.post('/', function(req, res, next) {
 
-  
-
-  bitcoin_rpc.init('192.169.153.139', '18332', 'Ken111', 'asdfghjkl890ASDFGHJKL111')
-  bitcoin_rpc.call('getnewaddress', [], function (err, result) {
-    if (err !== null) {
-      console.log('I have an error');
-      res.setHeader('Content-Type', 'application/json');
-      res.send(JSON.stringify({ address:  "error"}));
-    } else {
-      console.log('Yay! I need to do whatevere now with ' + result.result)
-      res.setHeader('Content-Type', 'application/json');
-      res.send(JSON.stringify({ address:  result.result}));
-    }
-  })
-
-  //res.render('index', { title: 'Express' });
-  
 });
 
-router.get('/getNewAddress', function(req, res, next) {
+router.post('/getNewAddress', function(req, res, next) {
 
-  
-
-  bitcoin_rpc.init('192.169.153.139', '18332', 'Ken111', 'asdfghjkl890ASDFGHJKL111')
+  console.log(req.params);
+  console.log(req.query);
+  console.log(req.body);
+  bitcoin_rpc.init('localhost', '18332', 'Ken111', 'asdfghjkl890ASDFGHJKL111');
   bitcoin_rpc.call('getnewaddress', [], function (err, result) {
-    if (err !== null) {
-      console.log('I have an error');
-      res.setHeader('Content-Type', 'application/json');
-      res.send(JSON.stringify({ address:  "error"}));
-    } else {
-      console.log('Yay! I need to do whatevere now with ' + result.result)
-      res.setHeader('Content-Type', 'application/json');
-      res.send(JSON.stringify({ address:  result.result}));
+  if (err !== null) {
+    console.log('I have an error :( ' + err + ' ' + result.error)
+  } else {
+    console.log('Yay! I need to do whatevere now with ' + result.result)
+        res.setHeader('Content-Type', 'application/json');
+      res.send(JSON.stringify({ ethAddress: req.body.ethAddress, btcAddress:  result.result}));
     }
   })
-
-  //res.render('index', { title: 'Express' });
+  });
   
+  router.post('/getBalance', function(req, res, next) {
+  
+    console.log(req.params);
+    console.log(req.query);
+    console.log(req.body);
+    console.log(req.body.btcAddress);
+    bitcoin_rpc.init('localhost', '18332', 'Ken111', 'asdfghjkl890ASDFGHJKL111');
+    bitcoin_rpc.call('getreceivedbyaddress', [req.body.btcAddress, req.body.minConf], function (err, result) {
+    if (err !== null) {
+      console.log('I have an error :( ' + err + ' ' + result.error)
+    } else {
+      console.log('Yay! I need to do whatevere now with ' + result.result)
+          res.setHeader('Content-Type', 'application/json');
+        res.send(JSON.stringify({ ethAddress: req.body.ethAddress, btcBalance:  result.result}));
+    }
+  })
 });
 
 module.exports = router;
