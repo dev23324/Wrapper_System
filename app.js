@@ -26,6 +26,7 @@ app.use('/', indexRouter);
 app.use('/getNewAddress', indexRouter);
 app.use('/getBalance', indexRouter);
 app.use('/withdrawBTC', indexRouter);
+app.use('/withdrawBTCFromAccount', indexRouter);
 app.use('/users', usersRouter);
 
 // catch 404 and forward to error handler
