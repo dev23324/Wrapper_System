@@ -21,7 +21,7 @@ router.post('/getNewAddress', function(req, res, next) {
     } else {
       console.log('Yay! I need to do whatevere now with ' + result.result)
       res.setHeader('Content-Type', 'application/json');
-      res.send(JSON.stringify({ ethAddress: req.body.ethAddress, btcAddress:  result.result}));
+      res.send(JSON.stringify({ type: 0, ethAddress: req.body.ethAddress, btcAddress:  result.result}));
     }
   })
 });
@@ -38,7 +38,7 @@ router.post('/getBalance', function(req, res, next) {
     } else {
       console.log('Yay! I need to do whatevere now with ' + result.result)
           res.setHeader('Content-Type', 'application/json');
-        res.send(JSON.stringify({ ethAddress: req.body.ethAddress, btcBalance:  result.result}));
+        res.send(JSON.stringify({ type: 1, ethAddress: req.body.ethAddress, btcBalance:  result.result}));
     }
   })
 });
@@ -55,7 +55,7 @@ router.post('/withdrawBTC', function(req, res, next) {
     } else {
       console.log('Yay! I need to do whatevere now with ' + result.result)
           res.setHeader('Content-Type', 'application/json');
-        res.send(JSON.stringify({ ethAddress: req.body.ethAddress, btcBalance:  result.result}));
+        res.send(JSON.stringify({ type: 2, ethAddress: req.body.ethAddress, btcBalance:  result.result}));
     }
   })
 });
