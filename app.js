@@ -25,6 +25,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/', indexRouter);
 app.use('/getNewAddress', indexRouter);
 app.use('/getBalance', indexRouter);
+app.use('/withdrawBTC', indexRouter);
 app.use('/users', usersRouter);
 
 // catch 404 and forward to error handler
